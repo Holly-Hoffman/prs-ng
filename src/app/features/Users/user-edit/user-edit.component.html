@@ -1,0 +1,79 @@
+<span class='component-title'>{{title}}</span>
+<p *ngIf='!user'>Loading...</p>
+<div *ngIf='user'>
+    <main class="single">
+        <table class="table table-sm">
+            <tr>
+                <td>
+                    First Name:
+                </td>
+                <td>
+                    <input [(ngModel)]="user.firstName" class="rounded" type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Last Name:
+                </td>
+                <td>
+                    <input [(ngModel)]="user.lastName" class="rounded" type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Username:
+                </td>
+                <td>
+                    <input [(ngModel)]="user.username" class="rounded" type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Password:
+                </td>
+                <td>
+                    <input [(ngModel)]="user.password" class="rounded" type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Phone Number:
+                </td>
+                <td>
+                    <input [(ngModel)]="user.phoneNumber" class="rounded" type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Email:
+                </td>
+                <td>
+                    <input [(ngModel)]="user.email" class="rounded" type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Reviewer:
+                </td>
+                <td>
+                    <select [(ngModel)]="user.reviewer" class="rounded">
+                        <option [ngValue]="true">true</option>
+                        <option [ngValue]="false">false</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Admin:
+                </td>
+                <td>
+                    <select [(ngModel)]="user.admin" class="rounded">
+                        <option [ngValue]="true">true</option>
+                        <option [ngValue]="false">false</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </main>
+    <span><button (click)="save()" class="btn btn-sm btn-primary">Save</button></span>
+</div>

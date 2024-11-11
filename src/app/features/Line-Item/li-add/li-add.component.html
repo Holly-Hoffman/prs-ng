@@ -1,0 +1,22 @@
+<div class="p-4">
+    <h1>{{ title }}</h1>
+    <table>
+        <tr>
+            <td>Product:</td>
+            <td>
+                <select [(ngModel)]="newItem.product" class="rounded">
+                    <option *ngFor="let p of products" [ngValue]="p">
+                        {{p.name}} ({{p.unit}}) | {{p.vendor.name}}
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Quantity:</td>
+            <td>
+                <input [(ngModel)]="newItem.quantity" type="number" />
+            </td>
+        </tr>
+    </table>
+    <button (click)="addLineItem()">Add Item</button>
+</div>
