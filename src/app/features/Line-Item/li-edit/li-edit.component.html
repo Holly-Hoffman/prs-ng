@@ -1,1 +1,25 @@
-<p>li-edit works!</p>
+<span class='component-title'>{{title}}</span>
+<p *ngIf='!li'>Loading...</p>
+<div *ngIf='li'>
+    <main class="single">
+        <table>
+            <tr>
+                <td>Product:</td>
+                <td>
+                    <select [(ngModel)]="li.product" class="rounded">
+                        <option *ngFor="let p of products" [ngValue]="p">
+                            {{p.name}} ({{p.unit}}) | {{p.vendor.name}}
+                        </option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Quantity:</td>
+                <td>
+                    <input [(ngModel)]="li.quantity" type="number" />
+                </td>
+            </tr>
+        </table>
+    </main>
+    <span><button (click)="save()" class="btn btn-sm btn-primary">Save</button></span>
+</div>

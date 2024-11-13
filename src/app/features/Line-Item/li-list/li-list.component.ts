@@ -18,6 +18,7 @@ export class LiListComponent implements OnInit, OnDestroy {
   lineItem!: LineItem;
   subscription!: Subscription;
   request!: Request
+  requestId!: number;
 
   constructor(private liSvc: LineitemService,
     private reqSvc: RequestService,
@@ -29,26 +30,21 @@ export class LiListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sysService.checkLogin();
 
-    let id = parseInt(this.currentRoute.snapshot.params['id']);
-
-    this.subscription = this.reqSvc.getById(id).subscribe({
-      next: () => {
-        this.subscription = this.reqSvc.getById(id).subscribe((resp) => {
-          console.debug("Request:", resp);
+    this.currentRoute.params.subscribe((parameters) => {
+      this.requestId = parameters['id'];
+      this.subscription = this.reqSvc.getById(this.requestId).subscribe({
+        next: (resp) => {
           this.request = resp;
-        });
-      },
-      error: (err) => {
-        console.log("Error retrieving request: ", err);
-      },
+        },
+        error: (err) => {
+          console.log("Error retrieving request: ", err);
+        },
+      });
     });
 
-    this.liSvc.getByReq(id).subscribe({
-      next: () => {
-        this.subscription = this.liSvc.getByReq(id).subscribe((resp) => {
-          console.debug("Request Lines:", resp);
-          this.lineItems;
-        })
+    this.liSvc.getByReq(this.requestId).subscribe({
+      next: (resp) => {
+        this.lineItems = Array.isArray(resp) ? resp : [];
       },
       error: (err) => {
         console.log("Error retrieving line items: ", err);
@@ -56,19 +52,14 @@ export class LiListComponent implements OnInit, OnDestroy {
     });
   }
 
-  multiply(a: number, b: number): number {
-    return (a * b);
-  }
+  get requestID() { return (this.request && this.request.id) ? this.request.id : null };
 
   refreshLines(): void {
     let id = this.currentRoute.snapshot.params['id'];
 
-    this.liSvc.getById(id).subscribe({
-      next: () => {
-        this.subscription = this.liSvc.getById(id).subscribe((resp) => {
-          console.debug("Request Lines:", resp);
-          this.lineItems;
-        })
+    this.liSvc.getByReq(id).subscribe({
+      next: (resp) => {
+        this.lineItems = Array.isArray(resp) ? resp : [];
       },
       error: (err) => {
         console.log("Error finding line items: ", err);
@@ -82,7 +73,7 @@ export class LiListComponent implements OnInit, OnDestroy {
     this.reqSvc.getById(id).subscribe({
       next: () => {
         this.subscription = this.reqSvc.getById(id).subscribe((resp) => {
-          console.debug("Request:", resp);
+          //console.debug("Request:", resp);
           this.request = resp;
         })
       },
@@ -92,14 +83,12 @@ export class LiListComponent implements OnInit, OnDestroy {
     });
   }
 
-  deleteLine(id: number): void {
+  delete(id: number): void {
     this.subscription = this.liSvc.delete(id).subscribe({
       next: () => {
-        this.subscription = this.liSvc.list().subscribe((resp) => {
-          console.debug("Line Item deleted!");
-          this.refreshLines();
-          this.refreshRequest();
-        });
+        //console.debug("Line Item deleted!");
+        this.refreshLines();
+        this.refreshRequest();
       },
       error: (err) => {
         console.log("Could not delete line item: ", err);

@@ -1,1 +1,46 @@
-<p>request-review-list works!</p>
+<div class="p-4">
+    <section class="heading">
+        <span class="page-title font-weight-bold font-italic">{{ title }}</span>
+        <a routerLink="/request-create">
+            <img width="20" height="20" src="assets/Add.PNG" title="Add New" />
+        </a>
+    </section>
+    <table class="table table-striped table-hover">
+        <thead>
+            <th>Id</th>
+            <th>User</th>
+            <th>Request Number</th>
+            <th>Description</th>
+            <th>Justification</th>
+            <th>Date Needed</th>
+            <th>Delivery Mode</th>
+            <th>Status</th>
+            <th>Total</th>
+            <th>Submitted Date</th>
+            <th>Reason for Rejection</th>
+            <th>Action</th>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let r of requests">
+                <tr *ngIf="r.status!='New'">
+                    <td>{{ r.id }}</td>
+                    <td>{{ r.user.username }}</td>
+                    <td>{{ r.requestNumber }}</td>
+                    <td>{{ r.description }}</td>
+                    <td>{{ r.justification }}</td>
+                    <td>{{ r.dateNeeded }}</td>
+                    <td>{{ r.deliveryMode }}</td>
+                    <td>{{ r.status }}</td>
+                    <td>${{ r.total }}</td>
+                    <td>{{ r.submittedDate }}</td>
+                    <td>{{ r.reasonForRejection }}</td>
+                    <td>
+                        <a routerLink="/request-review/{{r.id}}">
+                            <img src="assets/Details.png" width="20" height="20" title="Request Review" />
+                        </a>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>

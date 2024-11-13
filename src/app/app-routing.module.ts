@@ -22,6 +22,8 @@ import { LiListComponent } from './features/Line-Item/li-list/li-list.component'
 import { LiAddComponent } from './features/Line-Item/li-add/li-add.component';
 import { LiEditComponent } from './features/Line-Item/li-edit/li-edit.component';
 import { LiFindOnReqComponent } from './features/Line-Item/li-find-on-req/li-find-on-req.component';
+import { RequestReviewListComponent } from './features/Request/request-review-list/request-review-list.component';
+import { RequestReviewComponent } from './features/Request/request-review/request-review.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/user-list', pathMatch: 'full' },
@@ -41,9 +43,11 @@ const routes: Routes = [
   { path: 'request-create', component: RequestCreateComponent },
   { path: 'request-edit/:id', component: RequestEditComponent },
   { path: 'request-detail/:id', component: RequestDetailComponent },
+  { path: 'request-review-list', component: RequestReviewListComponent },
+  { path: 'request-review/:id', component: RequestReviewComponent },
   { path: 'user-login', component: UserLoginComponent },
   { path: 'li-list/:id', component: LiListComponent },
-  { path: 'li-add', component: LiAddComponent },
+  { path: 'li-add/:id', component: LiAddComponent },
   { path: 'li-edit/:id', component: LiEditComponent },
   { path: 'li-find-on-req/:id', component: LiFindOnReqComponent },
   { path: '**', component: NotFoundComponent }

@@ -34,7 +34,7 @@
 <div class="p-4">
     <section class="heading">
         <span class="page-title font-weight-bold font-italic">{{ title }}</span>
-        <a routerLink="/li-add">
+        <a routerLink="/li-add/{{requestID}}">
             <img width="20" height="20" src="assets/Add.PNG" title="Add New" />
         </a>
     </section>
@@ -49,14 +49,26 @@
         </thead>
 
         <tbody>
-            <tr *ngFor="let li of lineItems">
-                <td>{{li.product.vendor.name}}</td>
-                <td>{{li.product.name}}</td>
-                <td>{{li.quantity}}</td>
-                <td>{{li.product.price}}</td>
-                <td>{{li.product.price*li.quantity}}</td>
-                <td>To be addressed</td>
+            <tr *ngIf="lineItems && lineItems.length === 0">
+                <td colspan="6">No line items available</td>
+            </tr>
+            <tr *ngFor="let lineItem of lineItems">
+                <td>{{lineItem.product.vendor.name}}</td>
+                <td>{{lineItem.product.name}}</td>
+                <td>{{lineItem.quantity}}</td>
+                <td>{{lineItem.product.price}}</td>
+                <td>{{lineItem.product.price*lineItem.quantity}}</td>
+                <td>
+                    <a routerLink="/li-edit/{{lineItem.id}}">
+                        <img src="assets/Edit.png" width="20" height="20" title="Edit Line">
+                    </a> |
+                    <a>
+                        <img src="assets/Delete.png" width="20" height="20" title="Delete Line"
+                            (click)="delete(lineItem.id)">
+                    </a>
+                </td>
             </tr>
         </tbody>
     </table>
+    <span><button (click)="submit()" class="btn btn-sm btn-primary">Submit</button></span>
 </div>
